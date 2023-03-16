@@ -26,6 +26,10 @@ public class Symund_WebPage {
     public WebElement wrongMessage;
     @FindBy(xpath = "//button[contains(@class,'user-status')]")
     public  WebElement setStatus;
+
+
+    @FindBy(xpath = "//input[@placeholder='Password']")
+    public WebElement placeHolderPassword;
     public void login(String username,String password){
         inputUsername.sendKeys(username);
         inputPassword.sendKeys(password);
