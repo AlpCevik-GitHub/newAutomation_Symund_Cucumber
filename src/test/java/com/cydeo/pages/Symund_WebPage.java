@@ -28,8 +28,8 @@ public class Symund_WebPage {
     public WebElement setStatus;
 
     @FindBy(xpath = "//*[@name='user']")
-
     public WebElement userFillOutMessage;
+
     @FindBy(xpath = "//*[@name='password']")
     public WebElement passwordFillOutMessage;
     @FindBy(xpath = "//input[@placeholder='Password']")

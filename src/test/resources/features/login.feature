@@ -15,13 +15,24 @@ Feature:Symund app login feature
     And user enters employee password in  password field
 
       | password | Employee123 |
-    And user hit the enter or click the login button
+    And user hit the enter
     Then user should see the dashboard
 
   @SYMU10-353
   Scenario Outline: Login as employee
-    When user enters employee "<invalid username>" and "<invalid password>"
-    And user hit the enter or click the login button
+    When user enters employee as a "<invalid username>" and "<invalid password>"
+    And user hit the enter
+    Then user should see wrong message
+    Examples:
+      | invalid username | invalid password |
+      | Employee40       | Employee124      |
+      | asdasdasd        | asdasdasd        |
+
+
+  @SYMU10-355
+  Scenario Outline: Login as employee
+    When user enters employee as a "<invalid username>" and "<invalid password>"
+    And user click the login button
     Then user should see wrong message
     Examples:
       | invalid username | invalid password |
@@ -30,8 +41,19 @@ Feature:Symund app login feature
 
   @SYMU10-354
   Scenario Outline: Login as employee
+    When user enters employee "<username>" and "<password>"
+    And user hit the enter
+    Then user should see Please fill out this field message
+
+    Examples:
+      | username  | password    |
+      |           | Employee124 |
+      | asdasdasd |             |
+
+  @SYMU10-356
+  Scenario Outline: Login as employee
     When user enters employee "<invalid username>" and "<invalid password>"
-    And user hit the enter or click the login button
+    And user click the login button
     Then user should see Please fill out this field message
 
     Examples:
