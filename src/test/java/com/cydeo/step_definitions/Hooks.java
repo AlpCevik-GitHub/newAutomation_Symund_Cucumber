@@ -56,6 +56,17 @@ public class Hooks {
         Driver.closeDriver();
 
     }
+    @After("@SYMU10-482")
+    public void tearDownForLogoutScenario(Scenario scenario) {
+
+
+        byte[] screenshot = ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.BYTES);
+        scenario.attach(screenshot, "image/png", scenario.getName());
+
+
+        Driver.closeDriver();
+
+    }
 
 
 }

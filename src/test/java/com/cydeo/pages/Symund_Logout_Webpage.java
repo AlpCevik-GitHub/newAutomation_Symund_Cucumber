@@ -17,4 +17,5 @@ public class Symund_Logout_Webpage {
 
     @FindBy(xpath = "//*[@id=\"expand\"]/div[1]/img")
     public WebElement E_Button;
+
 }

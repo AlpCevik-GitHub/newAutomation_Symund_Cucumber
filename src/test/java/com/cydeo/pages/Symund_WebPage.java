@@ -1,5 +1,6 @@
 package com.cydeo.pages;
 
+import com.cydeo.utilities.ConfigurationReader;
 import com.cydeo.utilities.Driver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,6 +42,7 @@ public class Symund_WebPage {
     public WebElement explicitPasswordImg;
 
     public void login(String username, String password) {
+        Driver.getDriver().get(ConfigurationReader.getProperty("environment"));
         inputUsername.sendKeys(username);
         inputPassword.sendKeys(password);
         logInButton.click();
