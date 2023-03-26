@@ -17,7 +17,6 @@ public class Hooks {
     }*/
 
 
-
     @BeforeStep
     public void beforeStep() {
         System.out.println("this is before step!!!");
@@ -40,6 +39,29 @@ public class Hooks {
             scenario.attach(screenshot, "image/png", scenario.getName());
 
         }
+
+
+        Driver.closeDriver();
+
+    }
+
+    @After("  @SYMU10-384")
+    public void tearDownForScenario384(Scenario scenario) {
+
+
+        byte[] screenshot = ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.BYTES);
+        scenario.attach(screenshot, "image/png", scenario.getName());
+
+
+        Driver.closeDriver();
+
+    }
+    @After("@SYMU10-482")
+    public void tearDownForLogoutScenario(Scenario scenario) {
+
+
+        byte[] screenshot = ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.BYTES);
+        scenario.attach(screenshot, "image/png", scenario.getName());
 
 
         Driver.closeDriver();

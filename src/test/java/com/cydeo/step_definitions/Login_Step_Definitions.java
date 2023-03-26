@@ -9,17 +9,16 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.junit.Test;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
-import java.util.Arrays;
 import java.util.Map;
 
-public class Login_Step_Definitions  {
+public class Login_Step_Definitions {
     Symund_WebPage webPage = new Symund_WebPage();
     String userName = "";
     String passWord = "";
-
 
     /* @Given("user is on the Symund login page")
      public void user_is_on_the_symund_login_page() {
@@ -32,17 +31,24 @@ public class Login_Step_Definitions  {
     }
 
     @When("user enters employee username in username field")
-    public void user_enters_employee_in_username_field(Map<String, String> string) {
-        webPage.inputUsername.sendKeys(string.get("username"));
+    public void user_enters_employee_in_username_field(Map<String, String> username) {
+        webPage.inputUsername.sendKeys(username.get("username"));
     }
 
     @When("user enters employee password in  password field")
-    public void user_enters_employee_password_in_password_field(Map<String, String> string) {
-        webPage.inputPassword.sendKeys(string.get("password"));
+    public void user_enters_employee_password_in_password_field(Map<String, String> password) {
+        webPage.inputPassword.sendKeys(password.get("password"));
     }
 
-    @When("user hit the enter or click the login button")
-    public void user_hit_the_enter_or_click_the_login_button() {
+    @When("user hit the enter")
+    public void user_hit_the_enter() {
+
+        webPage.logInButton.sendKeys(Keys.ENTER);
+    }
+
+    @When("user click the login button")
+    public void user_click_the_login_button() {
+
         webPage.logInButton.click();
     }
 
@@ -56,13 +62,16 @@ public class Login_Step_Definitions  {
     }
 
     @When("user enters employee {string} and {string}")
-    public void user_enters_employee_and(String string, String string2) {
-        if (string.equals(""))
-            userName = "enable";
-        if (string2.equals(""))
-            passWord = "enable";
-        webPage.inputUsername.sendKeys(string);
-        webPage.inputPassword.sendKeys(string2);
+    public void user_enters_employee_and(String username, String password) {
+        if (!username.isEmpty()) {
+            webPage.inputUsername.sendKeys(username);
+            userName = username;
+            passWord="";
+        } else if (!password.isEmpty()) {
+            webPage.inputPassword.sendKeys(password);
+            passWord = password;
+            userName="";
+        }
 
     }
 
@@ -79,20 +88,19 @@ public class Login_Step_Definitions  {
     @Then("user should see Please fill out this field message")
     public void user_should_see_please_fill_out_this_field_message() {
         String expected = "Please fill out this field.";
-        if (userName.equals("enable")) {
+        if (userName.isEmpty()) {
             String actual = webPage.userFillOutMessage.getAttribute("validationMessage");
             Assert.assertEquals(expected, actual);
             System.out.println(actual);
-            userName="";
-        } else if (passWord.equals("enable")) {
-            String actual1 = webPage.passwordFillOutMessage.getAttribute("validationMessage");
-
-            Assert.assertEquals(expected, actual1);
-            System.out.println(actual1);
-            passWord="";
+        } else if (passWord.isEmpty()) {
+            String actual = webPage.passwordFillOutMessage.getAttribute("validationMessage");
+            Assert.assertEquals(expected, actual);
+            System.out.println(actual);
         }
 
+
     }
+
 
     @When("user can see Forgot password? link")
     public void user_can_see_forgot_password_link() {
@@ -118,8 +126,8 @@ public class Login_Step_Definitions  {
 
     @When("User can see the password in a form of dots by default")
     public void user_can_see_the_password_in_a_form_of_dots_by_default() {
-        String expected = "Password";
-        String actual = webPage.placeHolderPassword.getAttribute("placeholder");
+        String expected = "password";
+        String actual = webPage.inputPassword.getAttribute("type");
         Assert.assertEquals(expected, actual);
         System.out.println(actual);
     }
@@ -130,18 +138,20 @@ public class Login_Step_Definitions  {
     }
 
 
-
     @Then("user  can see password explicitly")
     public void user_can_see_password_explicitly() {
 
+        String expected = "text";
+        String actual = webPage.inputPassword.getAttribute("type");
+        Assert.assertEquals(expected, actual);
+        System.out.println(actual);
 
-        byte[] screenshot = ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.BYTES);
 
-        System.out.println(webPage.placeHolderPassword.getAttribute("placeholder"));
-
+        System.out.println("webPage.inputPassword.getAttribute(\"type\") = " + webPage.inputPassword.getAttribute("type"));
 
 
     }
+
 
     @When("User can see valid placeholders on Username and Password fields")
     public void user_can_see_valid_placeholders_on_username_and_password_fields() {
@@ -155,4 +165,11 @@ public class Login_Step_Definitions  {
         System.out.println(actual1);
     }
 
+    @When("user enters employee as a {string} and {string}")
+    public void userEntersEmployeeAsAAnd(String username, String password) {
+        webPage.inputUsername.sendKeys(username);
+        webPage.inputPassword.sendKeys(password);
+
+
+    }
 }
